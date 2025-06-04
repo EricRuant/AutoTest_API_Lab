@@ -1,0 +1,61 @@
+name: API Test
+
+on: [push]
+
+jobs:
+  my-job:
+    runs-on: ubuntu-latest
+
+    # === 啟動 MySQL 作為測試資料庫服務 ===
+    services:
+      mysql:
+        image: mysql:8.0                     # 使用 MySQL 8.0 官方映像檔
+        ports:
+          - 3306:3306                       # 對外開放 3306 埠口
+        env:                                # 設定資料庫初始資訊
+          MYSQL_DATABASE: my_database       # 建立預設資料庫
+          MYSQL_ROOT_PASSWORD: root         # root 使用者密碼
+          MYSQL_USER: myuser                # 測試用帳號
+          MYSQL_PASSWORD: zxcv123           # 測試用密碼
+        options: >-
+          --health-cmd="mysqladmin ping --silent"   
+          --health-interval=10s                     
+          --health-timeout=5s
+          --health-retries=3                        
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.12.9
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Start FastAPI server in background
+      run: |
+        uvicorn test_app.test_main:app --host 127.0.0.1 --port 8000 &
+        sleep 8  # 等待伺服器啟動
+
+    - name: Wait for server 
+      run: |
+        for i in {1..10}; do
+          curl -s http://127.0.0.1:8000 && break
+          echo "Waiting for FastAPI..."
+          sleep 1
+        done
+
+    - name: Run API tests
+      run: |
+        pytest test_api/test/ --html=report.html
+
+    - name: Upload test report
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-report
+        path: report.html

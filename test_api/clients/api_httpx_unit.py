@@ -1,8 +1,4 @@
-# test_api/clients/api_httpx_unit.py
-# 匯入 httpx 套件中的非同步用戶端
-from httpx import AsyncClient   # 匯入 httpx 的非同步客戶端
-
-# 使用 FastAPI app 僅為型別提示，不要重建 client
+from httpx import AsyncClient   
 from api.api_main import app
 
 

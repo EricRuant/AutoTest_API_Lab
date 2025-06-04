@@ -6,6 +6,9 @@ jobs:
   my-job:
     runs-on: ubuntu-latest
 
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
     # === 啟動 MySQL 作為測試資料庫服務 ===
     services:
       mysql:

@@ -1,6 +1,3 @@
-# httpx + pytest
-
-# 匯入 pytest 與封裝過的 TestClient 測試工具函式
 import pytest
 import pytest_asyncio  
 from test_api.clients.api_httpx_unit import async_response_post, async_response_delete
@@ -66,7 +63,7 @@ async def test_success_user_id(success_user_id, test_session, client):
 @pytest.mark.parametrize("user_data", duplicate_test_cases_email)
 async def test_400_user_id_email(default_user, user_data, client):
     data = user_data.copy()
-    data["password"] = "12345678"  # 確保通過密碼驗證
+    data["password"] = "12345678"  
     response = await async_response_post(data, client)
     await assert_response_fail_400_email(response)
 
@@ -76,7 +73,7 @@ async def test_400_user_id_email(default_user, user_data, client):
 @pytest.mark.parametrize("user_data", duplicate_test_cases_username)
 async def test_400_user_id_username(default_user, user_data, client):
     data = user_data.copy()
-    data["password"] = "12345678"  # 確保通過密碼驗證
+    data["password"] = "12345678"  
     response = await async_response_post(data, client)
     await assert_response_fail_400_username(response)
 

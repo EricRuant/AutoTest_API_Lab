@@ -4,14 +4,13 @@ from api.api_main import app
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from sqlalchemy.pool import StaticPool
 
-# 匯入 asyncio 模組與系統平台判斷
 import asyncio
 import sys
 
 from httpx import AsyncClient
 
-from api.api_main import app  # 你自己的 FastAPI app
-from api.db.session import Base, get_session  # 原始 get_session 依賴
+from api.api_main import app 
+from api.db.session import Base, get_session  
 
 # ✅ 建立 async SQLite 測試引擎
 DATABASE_URL = "sqlite+aiosqlite:///:memory:"
@@ -42,13 +41,13 @@ async def prepare_test_db():
     async with test_engine.begin() as conn:
         await conn.run_sync(Base.metadata.drop_all)
 
-# ✅ 提供測試用的 async session
+# 提供測試用的 async session
 @pytest_asyncio.fixture
 async def test_session():
     async with TestSessionLocal() as session:
         yield session
 
-# ✅ httpx 測試客戶端（非同步、FastAPI 綁定、覆蓋依賴）
+# httpx 測試客戶端（非同步、FastAPI 綁定、覆蓋依賴）
 @pytest_asyncio.fixture
 async def client(test_session):
     async def override_get_session():
@@ -58,7 +57,7 @@ async def client(test_session):
     async with AsyncClient(app=app, base_url="http://test") as c:
         yield c
 
-# 🧑‍💻 fixture：預設使用者（建立與清理）
+# fixture：預設使用者（建立與清理）
 @pytest_asyncio.fixture(scope="function")
 async def default_user(client):
     user_data = {
@@ -75,7 +74,7 @@ async def default_user(client):
     except Exception as e:
         raise RuntimeError(f"建立 default_user 發生錯誤：{e}")
 
-    yield user  # 提供給測試使用
+    yield user 
 
     # 測試結束後刪除該使用者（清理資源）
     try:

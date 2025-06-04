@@ -32,7 +32,7 @@ async def register_get(id: UUID, db: AsyncSession) -> User:
 async def has_changes(user: User, data: dict) -> bool:
     for key, new_value in data.items():
         if not hasattr(user, key):
-            continue  # 忽略不存在的欄位
+            continue 
         old_value = getattr(user, key)
 
         if key == "password":

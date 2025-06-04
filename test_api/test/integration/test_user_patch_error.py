@@ -1,5 +1,5 @@
 import pytest
-from test_api.clients.api_httpx_integration import async_response_patch # 發出 PATCH 請求
+from test_api.clients.api_httpx_integration import async_response_patch
 from test_api.test.integration.helpers.test_user_patch_error_assertions import (
     assert_response_success,        # 驗證成功更新
     assert_response_repeat_success, # 驗證重複更新

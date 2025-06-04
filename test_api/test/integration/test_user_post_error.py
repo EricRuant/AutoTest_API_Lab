@@ -65,7 +65,7 @@ async def test_success_user_id(success_user_id, get_test_session):
 @pytest.mark.parametrize("user_data", duplicate_test_cases_email)
 async def test_400_user_id_email(default_user, user_data):
     data = user_data.copy()
-    data["password"] = "12345678"  # 確保通過密碼驗證
+    data["password"] = "12345678" 
     response = await async_response_post(data)
     await assert_response_fail_400_email(response)
 
@@ -75,7 +75,7 @@ async def test_400_user_id_email(default_user, user_data):
 @pytest.mark.parametrize("user_data", duplicate_test_cases_username)
 async def test_400_user_id_username(default_user, user_data):
     data = user_data.copy()
-    data["password"] = "12345678"  # 確保通過密碼驗證
+    data["password"] = "12345678" 
     response = await async_response_post(data)
     await assert_response_fail_400_username(response)
 

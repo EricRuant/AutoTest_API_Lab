@@ -5,7 +5,6 @@ from test_api.test.integration.helpers.test_user_sql_assertions import (
 )
 
 # === ISO 8601 格式的正規表達式 ===
-# 用來驗證 created_at 是否為正確時間格式（例如 2025-05-06T08:33:19.303198）
 ISO = re.compile(
     r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?'
 )

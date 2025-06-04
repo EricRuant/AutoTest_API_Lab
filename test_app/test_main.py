@@ -1,4 +1,3 @@
-# test_main.py
 from fastapi import FastAPI
 from api.routers import users
 from contextlib import asynccontextmanager
@@ -27,5 +26,3 @@ def create_app() -> FastAPI:
     return app
 
 app = create_app()
-
-# 支援同時用同步 (TestClient)、非同步 (async 測試函式)、還有 requests 來測試這個測試伺服器。

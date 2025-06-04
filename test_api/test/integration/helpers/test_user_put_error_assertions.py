@@ -60,25 +60,3 @@ async def assert_response_fail_422(response, expected_error_key):
 
     # 驗證是否每個預期錯誤欄位都有出現
     assert expected_error_key.issubset(actual_keys), f"Expected keys {expected_error_key} not found in {actual_keys}"
-
-# === 附加說明 ===
-# assert UUID(data["id"]): 用來驗證該字串是否為合法 UUID
-# loc[-1]: 是為了從錯誤位置列表中取得最終欄位名稱（例如 ["body", "username"] 取 "username"）
-
-# assert UUID(data["id"]) 是用來 檢查 data["id"] 是否為一個合法的 UUID 字串。
-# from uuid import UUID
-# 這個 UUID() 是 Python 標準函式庫 uuid 裡的一個類別。你可以用它來：
-#   將字串轉換成 UUID 物件
-#   驗證該字串格式是否符合 UUID 標準（如 UUID4）
-
-# 🔒 assert UUID(data["id"]) 的含義：
-#   這是一個 斷言（assert）。
-#   如果 data["id"] 不是合法 UUID，UUID(data["id"]) 就會丟出 ValueError，導致測試失敗。
-#   如果是合法 UUID，則斷言會通過，測試繼續。
-
-# ❓為什麼是 ["loc"][-1]？
-# ✅ 使用 [-1] 的意義：
-# 取法	    取到的值	     適用情境
-# loc[0]	"body"	        來源位置
-# loc[1]	"password"	    一般欄位錯誤
-# loc[-1]	最終錯誤欄位名	 ✅最常用、通用做法

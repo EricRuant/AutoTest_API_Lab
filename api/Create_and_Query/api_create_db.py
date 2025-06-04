@@ -1,4 +1,3 @@
-# api/Create_and_Query/api_create_db.py
 # 建立資料表
 import asyncio
 from api.db.session import engine

@@ -1,6 +1,6 @@
 # 專案名稱: AutoTest_API_Lab
 
-## 1️⃣ 專案简介
+## 1️⃣ 專案簡介
 
 此專案是一個使用 **FastAPI + SQLAlchemy + Pydantic** 展示建立基礎 CRUD API 的專案。配合 **httpx + pytest** 啟用內建與實際伺服器的自動化測試，並展示 **pytest-html** 產生測試報告與 **GitHub Actions CI** 整合。
 
@@ -18,18 +18,31 @@
 
 ---
 
-## 3️⃣ 環境需求
+## 3️⃣ 專案目的
+本專案為自學 FastAPI + SQLAlchemy + Pytest 測試流程的練習，涵蓋以下內容：
+
+- 路由與 CRUD 操作實作
+- SQLAlchemy ORM 非同步資料庫操作
+- 使用 bcrypt 加密密碼欄位
+- 使用 httpx + pytest 建立整合測試
+- 自動產生 pytest-html 測試報告
+- 使用 GitHub Actions 整合自動化測試流程
+
+---
+
+## 4️⃣ 環境需求
 
 * Python 3.11+
 * FastAPI
 * SQLAlchemy
+* Pydantic
 * MySQL / SQLite (測試)
 * httpx (測試)
 * pytest (測試)
 
 ---
 
-## 4️⃣ 安裝與執行
+## 5️⃣ 安裝與執行
 
 ```bash
 # 下載專案
@@ -42,14 +55,20 @@ cd AutoTest_API_Lab
 pip install -r requirements.txt
 ```
 
+環境變數設定
+- 請將 `.env.example` 改為 `.env`
+
 啟動 FastAPI 伺服器
 ```bash
 uvicorn api.api_main:app --reload
 ```
 
+伺服器啟動後，開啟瀏覽器並前往：
+- API Docs: http://127.0.0.1:8000/docs
+
 ---
 
-## 5️⃣ API 端點測試方式
+## 6️⃣ API 端點測試方式
 
 ### 端點列表
 
@@ -69,9 +88,16 @@ uvicorn test_app.test_main:app --reload
 pytest --cov=api --cov-report=term --cov-report=html --html=report.html
 ```
 
+### 測試覆蓋情境
+-  GET 所有資料（成功）
+- POST 新增資料（成功與重複錯誤）
+- PUT 修改資料（成功與資料不存在）
+- DELETE 刪除（成功與資料不存在）
+- 資料驗證錯誤（缺欄位、自定義驗證錯誤）
+
 ---
 
-## 6️⃣ 未來改進項目
+## 7️⃣ 未來改進項目
 
 * [ ] JWT 認證 / 認證安全性
 * [ ] /me 取得當前登入用戶 API
@@ -82,7 +108,7 @@ pytest --cov=api --cov-report=term --cov-report=html --html=report.html
 
 ---
 
-## 7️⃣ 參考資源
+## 8️⃣ 參考資源
 
 * [FastAPI Docs](https://fastapi.tiangolo.com/)
 * [httpx Docs](https://www.python-httpx.org/)

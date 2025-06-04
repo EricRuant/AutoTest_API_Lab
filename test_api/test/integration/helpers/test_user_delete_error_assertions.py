@@ -5,7 +5,6 @@ from test_api.test.integration.helpers.test_user_sql_assertions import (
 )
 
 # ✅ 建立正規表達式，驗證 ISO 8601 格式（目前未使用）
-# 範例格式：2025-05-06T08:33:19.303198Z
 ISO = re.compile(
     r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?"
 )
@@ -51,30 +50,3 @@ async def assert_response_fail_404(response):
 
     # FastAPI 預設使用 "detail" 字段傳送錯誤資訊
     assert response.json()["detail"] == "User not found"
-
-# 🧠 補充知識點
-# FastAPI 的驗證錯誤格式
-# 舉例 UUID 錯誤格式的 response JSON：
-# {
-#   "detail": [
-#     {
-#       "loc": ["path", "id"],
-#       "msg": "value is not a valid uuid",
-#       "input": "abc",
-#       "type": "uuid_parsing"
-#     }
-#   ]
-# }
-# 你驗證的 key 都對應到這些欄位，非常準確。
-
-# 🔧 改進建議（選用）
-# ✅ 1. 可增加錯誤輸出以輔助除錯
-# 有時候錯誤格式不如預期時會難追錯，建議加入 assert 訊息或印出內容：
-#   assert response.status_code == 422, f"實際內容：{response.text}"
-# ✅ 2. 增加通用錯誤驗證函式（適用更多場景）
-# 例如：
-#   def assert_error(response, status_code: int, keyword: str):
-#       assert response.status_code == status_code
-#       assert keyword.lower() in response.text.lower()
-# 可以這樣使用：
-#   assert_error(response, 422, "uuid")

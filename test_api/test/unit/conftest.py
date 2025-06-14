@@ -26,8 +26,7 @@ TestSessionLocal = async_sessionmaker(bind=test_engine, expire_on_commit=False)
 
 # ==========================================
 # ✅ Windows 專用：指定事件迴圈，避免 asyncmy 出錯
-# ✅ 為解決 Windows 下 asyncio 相關套件相容問題（如 asyncmy）
-# 💡 建議加上註解出處，例如 官方 asyncmy 說明
+# ✅ 為解決 Windows 下 asyncio 相關套件相容問題
 # ==========================================
 if sys.platform.startswith("win"):
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
